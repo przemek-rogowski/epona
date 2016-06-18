@@ -6,15 +6,24 @@ CONFIGURATION
 // In build
 
 
-GET OPERATION
+GET operation
 
 ``` java
 public class UserGetQuery extends GetQuery<User> {
 
   @Override
-  protected User parseResult(Result r) {
-    // parsing logic
-    return null;
+  protected ResultParser<User> getParser() {
+    return new ResultParser<User>() {
+
+      public User parse() {
+        String name = getString("personal", "name");
+        String surname = getString("personal", "surname");
+        int age = getInt("personal", "age");
+        boolean isMan = getBoolean("personal", "is_man");
+
+        return new User(name, surname, age, isMan);
+      }
+    };
   }
 
   @Override
@@ -34,7 +43,7 @@ public class UserGetQuery extends GetQuery<User> {
 }
 ```
 
-PUT OPERATION
+PUT operation
 
 ``` Java
 
@@ -58,7 +67,7 @@ public class UserPutQuery extends PutQuery<User> {
 
 ```
 
-DELETE OPERATION
+DELETE operation
 
 ``` Java
 

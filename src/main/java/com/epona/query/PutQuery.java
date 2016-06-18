@@ -15,6 +15,15 @@ import java.util.List;
 
 public abstract class PutQuery<T> {
 
+  /***
+   *
+   * Saves vaues inside the hbase row
+   *
+   * @param rowKey key of the row in the HBase
+   * @param value the value that we would like to save in the row
+   * @return rowKey of the modified row, if the value where not save it will return null
+   *
+   */
   public String execute(String rowKey, T value) {
 
     Table table = null;
