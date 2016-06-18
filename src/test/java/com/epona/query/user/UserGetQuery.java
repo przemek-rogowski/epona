@@ -3,6 +3,7 @@ package com.epona.query.user;
 import com.epona.model.GetDescription;
 import com.epona.query.GetQuery;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.util.Bytes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 public class UserGetQuery extends GetQuery<User> {
 
   @Override
-  protected User parseResult(Result r) {
+  protected User parseResult(Result result) {
+    // parsing logic
     return null;
   }
 

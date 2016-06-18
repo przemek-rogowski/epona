@@ -53,6 +53,6 @@ public abstract class GetQuery<T> {
 
   protected abstract String getTableName();
 
-  protected abstract T parseResult(Result r);
+  protected abstract T parseResult(Result result);
 
 }
