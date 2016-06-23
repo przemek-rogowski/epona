@@ -1,6 +1,9 @@
 # Epona
 
 This is a java library that can effectively help in work with HBase. It will allows you to create queries to perform basic operation on your entities.
+This library is a wrapper for the hbase-client. The implementations should be compatible from the version 1.0.0. 
+http://mvnrepository.com/artifact/org.apache.hbase/hbase-client/1.2.1
+
 
 CONFIGURATION
 // In build

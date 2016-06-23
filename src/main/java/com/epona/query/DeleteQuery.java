@@ -20,8 +20,10 @@ public abstract class DeleteQuery {
   public void execute(String rowKey) {
 
     Table table = null;
+    Connection connection = null;
+
     try {
-      Connection connection = EponaConfig.getHBaseConnection();
+      connection = EponaConfig.getHBaseConnection();
       Delete delete = prepareDelete(rowKey);
       table = connection.getTable(getTable());
       table.delete(delete);
@@ -30,6 +32,7 @@ public abstract class DeleteQuery {
       e.printStackTrace();
     } finally {
       EponaUtil.closeSilently(table);
+      EponaUtil.closeSilently(connection);
     }
   }
 

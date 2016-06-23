@@ -23,9 +23,10 @@ public abstract class GetQuery<T> {
 
     T value = null;
     Table table = null;
+    Connection connection = null;
 
     try {
-      Connection connection = EponaConfig.getHBaseConnection();
+      connection = EponaConfig.getHBaseConnection();
       Get get = prepareGet(rowKey);
       table = connection.getTable(getTable());
       Result result = table.get(get);
@@ -35,6 +36,7 @@ public abstract class GetQuery<T> {
       e.printStackTrace();
     } finally {
       EponaUtil.closeSilently(table);
+      EponaUtil.closeSilently(connection);
     }
 
     return value;

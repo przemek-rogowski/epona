@@ -27,12 +27,14 @@ public abstract class PutQuery<T> {
   public String execute(String rowKey, T value) {
 
     Table table = null;
+    Connection connection = null;
     List<PutDescription> putDescriptions = preparePutDescription(value);
 
     try {
-      Connection connection = EponaConfig.getHBaseConnection();
-      Put put = preparePut(rowKey, putDescriptions);
+      connection = EponaConfig.getHBaseConnection();
       table = connection.getTable(getTable());
+      Put put = preparePut(rowKey, putDescriptions);
+
       table.put(put);
       return rowKey;
 
@@ -40,6 +42,7 @@ public abstract class PutQuery<T> {
       e.printStackTrace();
     } finally {
       EponaUtil.closeSilently(table);
+      EponaUtil.closeSilently(connection);
     }
 
     return null;
