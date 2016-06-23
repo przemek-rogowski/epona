@@ -52,7 +52,7 @@ import java.util.List;
 
 import static com.epona.model.GetDescriptionBuilder.getDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserGetQuery extends GetQuery<User> {
 
   @Override
@@ -108,7 +108,7 @@ import java.util.List;
 
 import static com.epona.model.PutDescriptionBuilder.putDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserPutQuery extends PutQuery<User> {
 
   @Override
@@ -154,7 +154,7 @@ import java.util.List;
 
 import static com.epona.model.DeleteDescriptionBuilder.deleteDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserDeleteQuery extends DeleteQuery {
 
   @Override
@@ -177,6 +177,49 @@ public class UserDeleteQuery extends DeleteQuery {
             .setQualifier("is_man")
             .build()
     );
+  }
+}
+
+```
+
+Example of usage of all services in normal case
+
+``` Java
+
+public class UserQueriesTest {
+
+  private UserPutQuery userPutQuery;
+  private UserGetQuery userGetQuery;
+  private UserDeleteQuery userDeleteQuery;
+
+  @Before
+  public void setup() {
+    userPutQuery = new UserPutQuery();
+    userGetQuery = new UserGetQuery();
+    userDeleteQuery = new UserDeleteQuery();
+  }
+
+  @Test
+  public void testUserQueries() throws Exception {
+
+    // Configuring the Epona
+    Configuration configuration = HBaseConfiguration.create();
+    configuration.set("hbase.zookeeper.quorum", "10.10.23.23");
+    EponaConfig.configure(configuration);
+
+    // creating object
+    User user = new User("Some", "Guy", 32, true);
+    String rowKey = user.getName() + "::" + user.getSurname();
+
+    // Storing data
+    userPutQuery.execute(rowKey, user);
+
+    // Getting data
+    User storedUser = userGetQuery.execute(rowKey);
+
+    // Delete user
+    userDeleteQuery.execute(rowKey);
+
   }
 }
 

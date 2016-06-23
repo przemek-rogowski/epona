@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.epona.model.PutDescriptionBuilder.putDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserPutQuery extends PutQuery<User> {
 
   @Override

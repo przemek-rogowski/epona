@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.epona.model.GetDescriptionBuilder.getDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserGetQuery extends GetQuery<User> {
 
   @Override

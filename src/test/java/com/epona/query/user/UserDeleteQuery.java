@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.epona.model.DeleteDescriptionBuilder.deleteDescription;
 
-@EponaQuery(name = "User")
+@EponaQuery(tableName = "User")
 public class UserDeleteQuery extends DeleteQuery {
 
   @Override

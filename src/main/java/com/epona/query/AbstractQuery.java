@@ -3,6 +3,9 @@ package com.epona.query;
 
 import org.apache.hadoop.hbase.TableName;
 
+import java.lang.annotation.Annotation;
+
+
 public abstract class AbstractQuery {
 
   protected TableName getTable() {
@@ -10,15 +13,18 @@ public abstract class AbstractQuery {
   }
 
   private String getTableName() {
-    String name = extractTableName();
-    validateTableName(name);
-    return name;
+    String tableName = extractTableName();
+    validateTableName(tableName);
+    return tableName;
   }
 
   private String extractTableName() {
-    Class<PutQuery> object = PutQuery.class;
-    EponaQuery eponaQuery = (EponaQuery) object.getAnnotation(EponaQuery.class);
-    return eponaQuery.name();
+    for (Annotation annotation : getClass().getAnnotations()) {
+      EponaQuery eponaQuery = (EponaQuery) annotation;
+      if (eponaQuery != null)
+        return eponaQuery.tableName();
+    }
+    return null;
   }
 
   private void validateTableName(String name) {
