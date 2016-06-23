@@ -1,6 +1,7 @@
 package com.epona.query.user;
 
 import com.epona.model.PutDescription;
+import com.epona.query.EponaQuery;
 import com.epona.query.PutQuery;
 
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static com.epona.model.PutDescriptionBuilder.putDescription;
 
+@EponaQuery(name = "User")
 public class UserPutQuery extends PutQuery<User> {
 
   @Override
@@ -36,8 +38,4 @@ public class UserPutQuery extends PutQuery<User> {
     );
   }
 
-  @Override
-  protected String getTableName() {
-    return "User";
-  }
 }

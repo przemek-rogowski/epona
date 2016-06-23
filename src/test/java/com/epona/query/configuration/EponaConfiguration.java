@@ -1,4 +1,4 @@
-package com.epona.query.user;
+package com.epona.query.configuration;
 
 
 import com.epona.configuration.EponaConfig;

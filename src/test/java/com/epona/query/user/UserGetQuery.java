@@ -2,6 +2,7 @@ package com.epona.query.user;
 
 import com.epona.model.GetDescription;
 import com.epona.parser.ResultParser;
+import com.epona.query.EponaQuery;
 import com.epona.query.GetQuery;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static com.epona.model.GetDescriptionBuilder.getDescription;
 
+@EponaQuery(name = "User")
 public class UserGetQuery extends GetQuery<User> {
 
   @Override
@@ -24,11 +26,6 @@ public class UserGetQuery extends GetQuery<User> {
         return new User(name, surname, age, isMan);
       }
     };
-  }
-
-  @Override
-  protected String getTableName() {
-    return "User";
   }
 
   @Override

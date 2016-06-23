@@ -4,7 +4,6 @@ package com.epona.query;
 import com.epona.configuration.EponaConfig;
 import com.epona.model.PutDescription;
 import com.epona.util.EponaUtil;
-import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
@@ -13,7 +12,8 @@ import org.apache.hadoop.hbase.util.Bytes;
 import java.io.IOException;
 import java.util.List;
 
-public abstract class PutQuery<T> {
+
+public abstract class PutQuery<T> extends AbstractQuery {
 
   /***
    *
@@ -48,10 +48,6 @@ public abstract class PutQuery<T> {
     return null;
   }
 
-  private TableName getTable() {
-    return TableName.valueOf(getTableName());
-  }
-
   private Put preparePut(String rowKey, List<PutDescription> descriptions) {
     Put put = new Put(Bytes.toBytes(rowKey));
     for (PutDescription description : descriptions) {
@@ -63,7 +59,5 @@ public abstract class PutQuery<T> {
   }
 
   protected abstract List<PutDescription> preparePutDescription(T value);
-
-  protected abstract String getTableName();
 
 }

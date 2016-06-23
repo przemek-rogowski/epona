@@ -5,14 +5,16 @@ import com.epona.configuration.EponaConfig;
 import com.epona.model.GetDescription;
 import com.epona.parser.ResultParser;
 import com.epona.util.EponaUtil;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
 import java.util.List;
 
-public abstract class GetQuery<T> {
+public abstract class GetQuery<T> extends AbstractQuery {
 
   /***
    *
@@ -42,10 +44,6 @@ public abstract class GetQuery<T> {
     return value;
   }
 
-  private TableName getTable() {
-    return TableName.valueOf(getTableName());
-  }
-
   private Get prepareGet(String rowKey) {
     List<GetDescription> descriptions = prepareGetDescription();
 
@@ -58,8 +56,6 @@ public abstract class GetQuery<T> {
   }
 
   protected abstract List<GetDescription> prepareGetDescription();
-
-  protected abstract String getTableName();
 
   protected abstract ResultParser<T> getParser();
 

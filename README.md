@@ -44,6 +44,7 @@ Example of GET operation
 
 import com.epona.model.GetDescription;
 import com.epona.parser.ResultParser;
+import com.epona.query.EponaQuery;
 import com.epona.query.GetQuery;
 
 import java.util.Arrays;
@@ -51,6 +52,7 @@ import java.util.List;
 
 import static com.epona.model.GetDescriptionBuilder.getDescription;
 
+@EponaQuery(name = "User")
 public class UserGetQuery extends GetQuery<User> {
 
   @Override
@@ -66,11 +68,6 @@ public class UserGetQuery extends GetQuery<User> {
         return new User(name, surname, age, isMan);
       }
     };
-  }
-
-  @Override
-  protected String getTableName() {
-    return "User";
   }
 
   @Override
@@ -103,6 +100,7 @@ Example of PUT operation
 ``` Java
 
 import com.epona.model.PutDescription;
+import com.epona.query.EponaQuery;
 import com.epona.query.PutQuery;
 
 import java.util.Arrays;
@@ -110,6 +108,7 @@ import java.util.List;
 
 import static com.epona.model.PutDescriptionBuilder.putDescription;
 
+@EponaQuery(name = "User")
 public class UserPutQuery extends PutQuery<User> {
 
   @Override
@@ -138,10 +137,6 @@ public class UserPutQuery extends PutQuery<User> {
     );
   }
 
-  @Override
-  protected String getTableName() {
-    return "User";
-  }
 }
 
 ```
@@ -152,12 +147,14 @@ Example of DELETE operation
 
 import com.epona.model.DeleteDescription;
 import com.epona.query.DeleteQuery;
+import com.epona.query.EponaQuery;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static com.epona.model.DeleteDescriptionBuilder.deleteDescription;
 
+@EponaQuery(name = "User")
 public class UserDeleteQuery extends DeleteQuery {
 
   @Override
@@ -180,11 +177,6 @@ public class UserDeleteQuery extends DeleteQuery {
             .setQualifier("is_man")
             .build()
     );
-  }
-
-  @Override
-  protected String getTableName() {
-    return "User";
   }
 }
 

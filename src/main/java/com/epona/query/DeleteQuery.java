@@ -3,19 +3,16 @@ package com.epona.query;
 
 import com.epona.configuration.EponaConfig;
 import com.epona.model.DeleteDescription;
-import com.epona.model.GetDescription;
 import com.epona.util.EponaUtil;
-import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Delete;
-import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
 import java.util.List;
 
-public abstract class DeleteQuery {
+public abstract class DeleteQuery extends AbstractQuery {
 
   public void execute(String rowKey) {
 
@@ -36,10 +33,6 @@ public abstract class DeleteQuery {
     }
   }
 
-  private TableName getTable() {
-    return TableName.valueOf(getTableName());
-  }
-
   private Delete prepareDelete(String rowKey) {
     List<DeleteDescription> descriptions = prepareDeleteDescription();
     Delete delete = new Delete(Bytes.toBytes(rowKey));
@@ -51,6 +44,4 @@ public abstract class DeleteQuery {
   }
 
   protected abstract List<DeleteDescription> prepareDeleteDescription();
-
-  protected abstract String getTableName();
 }
