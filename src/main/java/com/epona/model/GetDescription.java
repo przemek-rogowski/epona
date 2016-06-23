@@ -6,7 +6,7 @@ public class GetDescription {
   private final String family;
   private final String qualifier;
 
-  public GetDescription(String family, String qualifier) {
+  GetDescription(String family, String qualifier) {
     this.family = family;
     this.qualifier = qualifier;
   }

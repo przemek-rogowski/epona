@@ -1,23 +1,63 @@
 package com.epona.query.configuration;
 
 import com.epona.configuration.EponaConfig;
-import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import java.util.Properties;
-
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class EponaConfigTest {
 
-  @Test
-  public void shouldLoadProperties() throws Exception {
+  @Test(expected = IllegalArgumentException.class)
+  public void shouldFailWhenTriesToConfigureWithNull() throws Exception {
+    // given
+    Configuration config = null;
+
+    // when
+    EponaConfig.configure(config);
+
+    // then
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void shouldFailIfConnectionWasNotConfigured() throws Exception {
     // given
 
     // when
-    Properties properties = EponaConfig.loadProperties();
+    EponaConfig.getHBaseConnection();
 
     // then
-    assertThat(properties.get(EponaConfig.ZOOKEEPER_ADDRESS)).isEqualTo("localhost");
+  }
+
+  @Test
+  public void shouldAcceptConfiguration() throws Exception {
+    // given
+    Configuration config = HBaseConfiguration.create();
+    config.set("hbase.zookeeper.quorum", "10.10.23.23:2812");
+
+    // when
+    EponaConfig.configure(config);
+
+    // then
+    Configuration configuration = EponaConfig.getConfiguration();
+    assertThat(configuration).isNotNull();
+    assertThat(configuration.get("hbase.zookeeper.quorum")).isEqualTo("10.10.23.23:2812");
+  }
+
+  @Test
+  public void shouldClearConfiguration() throws Exception {
+    // given
+    Configuration config = HBaseConfiguration.create();
+    config.set("hbase.zookeeper.quorum", "10.10.23.23:2812");
+    EponaConfig.configure(config);
+
+    // when
+    EponaConfig.clearConfiguration();
+
+    // then
+    Configuration configuration = EponaConfig.getConfiguration();
+    assertThat(configuration).isNull();
   }
 }

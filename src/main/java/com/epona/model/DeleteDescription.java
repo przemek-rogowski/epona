@@ -6,7 +6,7 @@ public class DeleteDescription {
   private final String family;
   private final String qualifier;
 
-  public DeleteDescription(String family, String qualifier) {
+  DeleteDescription(String family, String qualifier) {
     this.family = family;
     this.qualifier = qualifier;
   }

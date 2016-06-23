@@ -7,7 +7,7 @@ public class PutDescription {
   private final String qualifier;
   private final String value;
 
-  public PutDescription(String family, String qualifier, String value) {
+  PutDescription(String family, String qualifier, String value) {
     this.family = family;
     this.qualifier = qualifier;
     this.value = value;

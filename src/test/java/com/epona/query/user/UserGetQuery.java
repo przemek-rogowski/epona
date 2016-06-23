@@ -3,10 +3,11 @@ package com.epona.query.user;
 import com.epona.model.GetDescription;
 import com.epona.parser.ResultParser;
 import com.epona.query.GetQuery;
-import org.apache.hadoop.hbase.client.Result;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.epona.model.GetDescriptionBuilder.getDescription;
 
 public class UserGetQuery extends GetQuery<User> {
 
@@ -32,11 +33,23 @@ public class UserGetQuery extends GetQuery<User> {
 
   @Override
   protected List<GetDescription> prepareGetDescription() {
-    List<GetDescription> descriptions = new ArrayList<GetDescription>();
-    descriptions.add(new GetDescription("personal", "name"));
-    descriptions.add(new GetDescription("personal", "surname"));
-    descriptions.add(new GetDescription("personal", "age"));
-    descriptions.add(new GetDescription("personal", "is_man"));
-    return descriptions;
+    return Arrays.asList(
+        getDescription()
+            .setFamily("personal")
+            .setQualifier("name")
+            .build(),
+        getDescription()
+            .setFamily("personal")
+            .setQualifier("surname")
+            .build(),
+        getDescription()
+            .setFamily("personal")
+            .setQualifier("age")
+            .build(),
+        getDescription()
+            .setFamily("personal")
+            .setQualifier("is_man")
+            .build()
+    );
   }
 }
